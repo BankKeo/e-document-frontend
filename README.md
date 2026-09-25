@@ -1,20 +1,25 @@
 # e-Document — Frontend
 
-Production-ready Next.js foundation for the e-Document application.
+Production-ready Next.js foundation for the e-Document enterprise platform:
+Electronic Document Management (e-DMS), Procurement (PMS), and Warehouse &
+Inventory (WMS).
 
 ## Project Overview
 
-A document-management frontend built with the Next.js App Router, Server
+A unified enterprise ERP application built with the Next.js App Router, Server
 Components by default, feature-based architecture, and a centralized API layer.
+The UI follows a restrained, premium enterprise design language (one product,
+three modules).
 
 ## Tech Stack
 
 - Next.js (App Router) + React
 - TypeScript (strict)
-- Tailwind CSS + shadcn/ui (Base UI)
-- TanStack Query (client-side server state)
+- Tailwind CSS + shadcn/ui (Base UI / base-nova)
+- TanStack Query (client-side server state) + TanStack Table (headless tables)
 - React Hook Form + Zod (forms & validation)
 - Axios (HTTP client with interceptors)
+- next-themes (dark mode) + sonner (toasts)
 - ESLint + Prettier
 
 ## Requirements
@@ -51,18 +56,27 @@ deploy time.
 
 ```text
 src/
-├── app/                 # routes, layouts, error/loading/not-found
+├── app/
+│   ├── (dashboard)/      # AppShell layout, routes, module placeholder
+│   ├── error.tsx / loading.tsx / not-found.tsx / global-error.tsx
+│   └── layout.tsx
 ├── components/
-│   └── ui/              # shadcn/ui primitives
-├── features/            # business features (domain-owned code)
-│   └── users/           # example feature
+│   ├── ui/               # shadcn/ui primitives
+│   ├── layout/           # AppShell, Sidebar, Topbar, Breadcrumbs, CommandMenu
+│   ├── data-table/       # enterprise DataTable (sort/search/columns/pagination)
+│   ├── dashboard/        # KpiCard and dashboard widgets
+│   └── shared/           # PageHeader, EmptyState, ErrorState, StatusBadge, ConfirmDialog
+├── config/
+│   ├── env.ts
+│   └── navigation.ts     # single source of truth for nav / breadcrumbs / search
+├── features/             # business features (domain-owned code)
+│   └── users/            # example feature
 ├── lib/
-│   ├── api/             # axios instance + typed errors
-│   ├── auth/            # token/session helpers
+│   ├── api/              # axios instance + typed errors
+│   ├── auth/             # token/session helpers
 │   └── utils/
-├── providers/           # QueryClientProvider
-├── types/               # shared types
-└── config/              # environment config
+├── providers/            # QueryClient, Theme, Toaster
+└── types/                # shared types
 ```
 
 ## Architecture
@@ -72,8 +86,9 @@ src/
 - **Feature folders** (`src/features/<feature>/`) keep types, schemas, API code,
   and components close to the feature that owns them.
 - **State separation:** server state → TanStack Query, form state → React Hook
-  Form, URL state → `searchParams`, local UI state → `useState`. No global store
-  is installed unless a real need appears.
+  Form, URL state → `searchParams`, local UI state → `useState`. No global store.
+- **Design system first.** Modules build on the shared AppShell, primitives, and
+  DataTable so e-DMS, PMS, and WMS feel like one platform.
 
 ## API Configuration
 
@@ -81,10 +96,9 @@ Single Axios instance (`src/lib/api/client.ts`):
 
 - attaches `Authorization: Bearer <token>`
 - transparently refreshes expired tokens on `401` (single retry)
-- normalizes backend errors into typed errors whose class is chosen by status:
-  `ValidationError` (422, with field map), `UnauthorizedError` (401),
-  `ForbiddenError` (403), `NotFoundError` (404), `RateLimitError` (429),
-  `NetworkError` (no response) — see `src/lib/api/errors.ts`.
+- normalizes backend errors into typed errors by status:
+  `ValidationError` (422), `UnauthorizedError` (401), `ForbiddenError` (403),
+  `NotFoundError` (404), `RateLimitError` (429), `NetworkError`
 
 Choose fetch vs TanStack Query per use case: native `fetch` in Server
 Components; TanStack Query for client-side caching, pagination, mutations, and
@@ -95,19 +109,24 @@ cache invalidation.
 Auth is decoupled from any specific provider and designed to integrate with the
 external backend API:
 
-- access tokens are stored in memory (`src/lib/auth/token.ts`)
-- refresh tokens are expected in an httpOnly cookie set by the backend
-  (fallback: localStorage)
-- the axios response interceptor performs automatic refresh
-- roles/permissions types are ready in `src/types/auth.ts`
+- access tokens in memory (`src/lib/auth/token.ts`)
+- refresh tokens expected in an httpOnly cookie set by the backend
+- axios response interceptor performs automatic refresh
+- roles/permissions types ready in `src/types/auth.ts`
 
 Assumption: the backend exposes `POST /auth/login`, `POST /auth/refresh`, and
-`POST /auth/logout`, and returns `{ accessToken, refreshToken? }`. Backend
-authorization remains authoritative — the frontend never relies on hiding UI.
+`POST /auth/logout`. Backend authorization remains authoritative.
+
+## Layout & Navigation
+
+`src/config/navigation.ts` drives the sidebar, breadcrumbs, and the ⌘K command
+palette. Module routes not yet implemented render a shared placeholder instead
+of a blank page. Route structure uses the `(dashboard)` route group with the
+AppShell layout.
 
 ## Testing
 
-Testing has not been installed yet. Recommended stack when needed: Vitest + React
+Testing not installed yet. Recommended stack when needed: Vitest + React
 Testing Library (unit/integration) and Playwright (E2E).
 
 ## Build
