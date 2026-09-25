@@ -25,11 +25,13 @@ export function EntityRowActions({
   onDelete,
   title,
   description,
+  canDelete = true,
 }: {
   onEdit?: () => void;
   onDelete?: () => void | Promise<void>;
   title: string;
-  description: string;
+  description?: string;
+  canDelete?: boolean;
 }) {
   const [menuOpen, setMenuOpen] = React.useState(false);
   const [confirmOpen, setConfirmOpen] = React.useState(false);
@@ -43,6 +45,7 @@ export function EntityRowActions({
       setConfirmOpen(false);
     } catch (error) {
       toast.error(error instanceof Error ? error.message : "Unable to delete.");
+      setConfirmOpen(false);
     } finally {
       setBusy(false);
     }
@@ -57,26 +60,32 @@ export function EntityRowActions({
           <MoreHorizontal />
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="w-40">
-          <DropdownMenuItem
-            onClick={() => {
-              setMenuOpen(false);
-              onEdit?.();
-            }}
-          >
-            <Pencil />
-            Edit
-          </DropdownMenuItem>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem
-            variant="destructive"
-            onClick={() => {
-              setMenuOpen(false);
-              setConfirmOpen(true);
-            }}
-          >
-            <Trash2 />
-            Delete
-          </DropdownMenuItem>
+          {onEdit ? (
+            <DropdownMenuItem
+              onClick={() => {
+                setMenuOpen(false);
+                onEdit();
+              }}
+            >
+              <Pencil />
+              Edit
+            </DropdownMenuItem>
+          ) : null}
+          {onEdit && onDelete ? <DropdownMenuSeparator /> : null}
+          {onDelete ? (
+            <DropdownMenuItem
+              variant="destructive"
+              disabled={!canDelete}
+              title={canDelete ? undefined : "Not available"}
+              onClick={() => {
+                setMenuOpen(false);
+                if (canDelete) setConfirmOpen(true);
+              }}
+            >
+              <Trash2 />
+              Delete
+            </DropdownMenuItem>
+          ) : null}
         </DropdownMenuContent>
       </DropdownMenu>
 
@@ -84,9 +93,7 @@ export function EntityRowActions({
         <DialogContent>
           <DialogHeader>
             <DialogTitle>{title}</DialogTitle>
-            {description ? (
-              <DialogDescription>{description}</DialogDescription>
-            ) : null}
+            {description ? <DialogDescription>{description}</DialogDescription> : null}
           </DialogHeader>
           <DialogFooter>
             <Button variant="outline" onClick={() => setConfirmOpen(false)} disabled={busy}>

@@ -72,8 +72,9 @@ src/
 ├── features/             # business features (domain-owned code)
 │   ├── users/            # user management: list/detail/profile (mock-first)
 │   ├── auth/             # login, sessions, MFA (mock-first) + AuthProvider
-│   └── organization/     # organization, depts, positions, employees,
-│                         #   hierarchy, approval authority (mock-first)
+│   ├── organization/     # organization, depts, positions, employees,
+│   │                     #   hierarchy, approval authority (mock-first)
+│   └── rbac/             # roles, permissions, data access (mock-first)
 ├── lib/
 │   ├── api/              # axios instance + typed errors
 │   ├── auth/             # token/session helpers
@@ -147,6 +148,12 @@ role/department catalogs.
 The organization module (`/admin/organization`, sub-tabbed) covers the entity
 profile, departments, positions, employees, a collapsible org chart, and
 approval authority — all mock-first. See `.agent/organization.md`.
+
+## Roles & Access (RBAC)
+
+`/admin/roles` (sub-tabbed) covers role CRUD, the permissions catalog,
+role-permission assignment, user-role assignment, department access, and
+data-level access — all mock-first. See `.agent/rbac.md`.
 
 ## Layout & Navigation
 

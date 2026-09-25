@@ -15,7 +15,7 @@ import {
 } from "../api/organization.queries";
 import type { ApprovalRule } from "../types";
 import { ApprovalRuleFormDialog } from "./approval-rule-form-dialog";
-import { EntityRowActions } from "./entity-row-actions";
+import { EntityRowActions } from "@/components/shared/entity-row-actions";
 
 const MODULE_VARIANTS: Record<string, "default" | "secondary" | "outline"> = {
   Procurement: "default",

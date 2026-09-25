@@ -191,6 +191,8 @@ const ADMINISTRATION: NavGroup = {
       title: "Roles & Permissions",
       href: "/admin/roles",
       icon: ShieldCheck,
+      description: "Roles, permissions, and data access controls.",
+      keywords: ["rbac", "role", "permission", "access", "security"],
     },
     {
       title: "Organization",

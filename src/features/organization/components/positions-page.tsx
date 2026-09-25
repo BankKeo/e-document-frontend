@@ -9,7 +9,7 @@ import { Badge } from "@/components/ui/badge";
 import { useDeletePosition, useDepartmentsQuery, usePositionsQuery } from "../api/organization.queries";
 import type { Position } from "../types";
 import { PositionFormDialog } from "./position-form-dialog";
-import { EntityRowActions } from "./entity-row-actions";
+import { EntityRowActions } from "@/components/shared/entity-row-actions";
 
 function buildColumns(
   departmentNameOf: (id: string) => string,

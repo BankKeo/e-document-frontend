@@ -18,7 +18,7 @@ import { StatusBadge } from "@/components/shared/status-badge";
 import { useDeleteEmployee, useDepartmentsQuery, useEmployeesQuery, usePositionsQuery } from "../api/organization.queries";
 import type { Employee, EmploymentStatus } from "../types";
 import { EmployeeFormDialog } from "./employee-form-dialog";
-import { EntityRowActions } from "./entity-row-actions";
+import { EntityRowActions } from "@/components/shared/entity-row-actions";
 
 function initials(name: string): string {
   return name
