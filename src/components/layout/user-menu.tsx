@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,54 +12,55 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import {
-  HelpCircle,
-  LogOut,
-  Settings,
-  UserRound,
-  UserRoundCog,
-} from "lucide-react";
+import { UserRoundCog, Lock, LogOut } from "lucide-react";
+import { useAuth } from "@/features/auth/context/auth-context";
+
+function initials(name: string): string {
+  return name
+    .split(" ")
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((part) => part[0]?.toUpperCase())
+    .join("");
+}
 
 export function UserMenu() {
+  const { user, signOut } = useAuth();
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger
         render={<Button variant="ghost" size="icon-sm" aria-label="Account" />}
       >
         <Avatar size="sm">
-          <AvatarFallback>MP</AvatarFallback>
+          <AvatarFallback>{user ? initials(user.name) : "U"}</AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-56">
         <DropdownMenuLabel className="flex flex-col">
           <span className="text-sm font-medium text-foreground">
-            Malina Phetxomphou
+            {user?.name ?? "Signed out"}
           </span>
           <span className="text-xs font-normal text-muted-foreground">
-            malina@acme.gov
+            {user?.email}
           </span>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem>
-            <UserRound />
-            My Profile
-          </DropdownMenuItem>
-          <DropdownMenuItem>
-            <Settings />
-            Preferences
-          </DropdownMenuItem>
-          <DropdownMenuItem>
+          <DropdownMenuItem render={<Link href="/account/security" />}>
             <UserRoundCog />
             Security
           </DropdownMenuItem>
+          <DropdownMenuItem render={<Link href="/account/security" />}>
+            <Lock />
+            Password &amp; sign-in
+          </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <DropdownMenuItem className="text-muted-foreground">
-          <HelpCircle className="size-4" />
-          Help & Documentation
-        </DropdownMenuItem>
-        <DropdownMenuItem variant="destructive">
+        <DropdownMenuItem
+          variant="destructive"
+          onClick={() => void signOut()}
+        >
           <LogOut />
           Sign Out
         </DropdownMenuItem>

@@ -70,7 +70,8 @@ src/
 │   ├── env.ts
 │   └── navigation.ts     # single source of truth for nav / breadcrumbs / search
 ├── features/             # business features (domain-owned code)
-│   └── users/            # example feature
+│   ├── users/            # example feature
+│   └── auth/             # login, sessions, MFA (mock-first) + AuthProvider
 ├── lib/
 │   ├── api/              # axios instance + typed errors
 │   ├── auth/             # token/session helpers
@@ -106,12 +107,26 @@ cache invalidation.
 
 ## Authentication
 
-Auth is decoupled from any specific provider and designed to integrate with the
-external backend API:
+Auth UI is implemented end-to-end against an in-memory mock service so the UX
+can be reviewed before the backend is wired up. See
+`.agent/authentication.md` for details, demo credentials, and the API swap
+plan.
+
+Routes & features:
+
+- `/login` — sign in (AUTH-001)
+- `/forgot-password`, `/reset-password` — password recovery (AUTH-004/005)
+- `/account/security` — change password, session management, MFA (AUTH-006/007/008)
+- Sign out from the avatar menu (AUTH-002); silent access-token refresh (AUTH-003)
+
+Session state lives in `src/features/auth/context/auth-context.tsx`
+(`AuthProvider`), with dashboard routes gated by `AuthGate`.
+
+Production integration stays decoupled from any provider:
 
 - access tokens in memory (`src/lib/auth/token.ts`)
 - refresh tokens expected in an httpOnly cookie set by the backend
-- axios response interceptor performs automatic refresh
+- axios response interceptor performs automatic refresh (`src/lib/api/client.ts`)
 - roles/permissions types ready in `src/types/auth.ts`
 
 Assumption: the backend exposes `POST /auth/login`, `POST /auth/refresh`, and

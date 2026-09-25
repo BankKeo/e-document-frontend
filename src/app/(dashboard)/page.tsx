@@ -7,6 +7,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { KpiCard } from "@/components/dashboard/kpi-card";
+import { DashboardGreeting } from "@/components/dashboard/greeting";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -44,9 +45,7 @@ export default function DashboardPage() {
   return (
     <div className="flex flex-col gap-8">
       <header>
-        <h1 className="text-xl font-semibold tracking-tight">
-          Good morning, Malina
-        </h1>
+        <DashboardGreeting />
         <p className="mt-1 text-sm text-muted-foreground">
           Here&apos;s what&apos;s happening across your organization.
         </p>

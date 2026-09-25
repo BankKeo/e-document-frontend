@@ -19,6 +19,7 @@ import {
   Warehouse,
   Workflow,
   ArrowLeftRight,
+  Lock,
   type LucideIcon,
 } from "lucide-react";
 
@@ -208,12 +209,26 @@ const ADMINISTRATION: NavGroup = {
   ],
 };
 
+const ACCOUNT: NavGroup = {
+  label: "Account",
+  items: [
+    {
+      title: "Security",
+      href: "/account/security",
+      icon: Lock,
+      description: "Password, sessions, and two-factor authentication.",
+      keywords: ["password", "session", "mfa", "2fa", "security"],
+    },
+  ],
+};
+
 export const navigationGroups: NavGroup[] = [
   WORKSPACE,
   PROCUREMENT,
   WAREHOUSE,
   ANALYTICS,
   ADMINISTRATION,
+  ACCOUNT,
 ];
 
 export const sidebarItems: NavItem[] = [
