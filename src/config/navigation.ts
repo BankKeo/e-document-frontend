@@ -9,17 +9,18 @@ import {
   Gavel,
   Home,
   LayoutDashboard,
+  Lock,
   Package,
   PackageCheck,
   ScrollText,
   Settings,
   ShieldCheck,
   Truck,
+  UserRound,
   Users,
   Warehouse,
   Workflow,
   ArrowLeftRight,
-  Lock,
   type LucideIcon,
 } from "lucide-react";
 
@@ -212,6 +213,13 @@ const ADMINISTRATION: NavGroup = {
 const ACCOUNT: NavGroup = {
   label: "Account",
   items: [
+    {
+      title: "Profile",
+      href: "/account/profile",
+      icon: UserRound,
+      description: "Your account and organization details.",
+      keywords: ["me", "account", "profile", "contact"],
+    },
     {
       title: "Security",
       href: "/account/security",

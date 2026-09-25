@@ -70,7 +70,7 @@ src/
 │   ├── env.ts
 │   └── navigation.ts     # single source of truth for nav / breadcrumbs / search
 ├── features/             # business features (domain-owned code)
-│   ├── users/            # example feature
+│   ├── users/            # user management: list/detail/profile (mock-first)
 │   └── auth/             # login, sessions, MFA (mock-first) + AuthProvider
 ├── lib/
 │   ├── api/              # axios instance + typed errors
@@ -131,6 +131,14 @@ Production integration stays decoupled from any provider:
 
 Assumption: the backend exposes `POST /auth/login`, `POST /auth/refresh`, and
 `POST /auth/logout`. Backend authorization remains authoritative.
+
+## User Management
+
+Admin user management (`/admin/users` + `/admin/users/[id]`) and the
+self-service profile (`/account/profile`) are implemented against an in-memory
+mock service. Features: create, view, edit, disable/activate, role & department
+assignment, and profile. See `.agent/user.md` for the API swap plan and the
+role/department catalogs.
 
 ## Layout & Navigation
 

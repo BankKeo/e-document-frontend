@@ -11,7 +11,7 @@ export default function UsersRoute() {
     <div>
       <PageHeader
         title="Users"
-        description="Manage users and their access to the platform."
+        description="Create and manage user accounts, roles, and department access."
       />
       <UsersPage />
     </div>

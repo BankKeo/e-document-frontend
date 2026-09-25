@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { UserRoundCog, Lock, LogOut } from "lucide-react";
+import { Lock, LogOut, UserRound, UserRoundCog } from "lucide-react";
 import { useAuth } from "@/features/auth/context/auth-context";
 
 function initials(name: string): string {
@@ -47,6 +47,10 @@ export function UserMenu() {
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
+          <DropdownMenuItem render={<Link href="/account/profile" />}>
+            <UserRound />
+            My Profile
+          </DropdownMenuItem>
           <DropdownMenuItem render={<Link href="/account/security" />}>
             <UserRoundCog />
             Security
