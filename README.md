@@ -71,7 +71,9 @@ src/
 │   └── navigation.ts     # single source of truth for nav / breadcrumbs / search
 ├── features/             # business features (domain-owned code)
 │   ├── users/            # user management: list/detail/profile (mock-first)
-│   └── auth/             # login, sessions, MFA (mock-first) + AuthProvider
+│   ├── auth/             # login, sessions, MFA (mock-first) + AuthProvider
+│   └── organization/     # organization, depts, positions, employees,
+│                         #   hierarchy, approval authority (mock-first)
 ├── lib/
 │   ├── api/              # axios instance + typed errors
 │   ├── auth/             # token/session helpers
@@ -139,6 +141,12 @@ self-service profile (`/account/profile`) are implemented against an in-memory
 mock service. Features: create, view, edit, disable/activate, role & department
 assignment, and profile. See `.agent/user.md` for the API swap plan and the
 role/department catalogs.
+
+## Organization
+
+The organization module (`/admin/organization`, sub-tabbed) covers the entity
+profile, departments, positions, employees, a collapsible org chart, and
+approval authority — all mock-first. See `.agent/organization.md`.
 
 ## Layout & Navigation
 
