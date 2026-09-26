@@ -5,7 +5,7 @@ function ago(minutes: number): string {
 }
 
 const VERSION_CONTENT = (subject: string) =>
-  `Overview\n\n${subject}\n\nThe purpose of this document is to define requirements, controls, and accountability. It is maintained within the e-Document platform and versioned for traceability.\n\nVersion history and approvals are recorded in the audit trail.`;
+  `Overview\n\n${subject}\n\nScope\n\nThis document defines the requirements, controls, and accountability for the referenced activity. It is maintained in the e-Document platform and versioned for full traceability.\n\nAudit\n\nEvery change is recorded in the audit trail with the responsible actor and timestamp.\n\nApproval\n\nThis revision is subject to the approval workflow configured for its category.`;
 
 export const MOCK_DOCUMENTS: DmsDocument[] = [
   {
@@ -23,8 +23,30 @@ export const MOCK_DOCUMENTS: DmsDocument[] = [
     tags: ["procurement", "planning"],
     sharedWith: ["kham@acme.gov", "anousone@acme.gov"],
     versions: [
-      { id: "v1", version: "v1.0", at: ago(18), actor: "Aloun Sisavath", summary: "Initial upload", fileName: "procurement-plan-2026.pdf", size: 482_113, content: VERSION_CONTENT("Annual procurement plan with quarterly milestones and budget envelopes.") },
-      { id: "v2", version: "v1.1", at: ago(6), actor: "Aloun Sisavath", summary: "Q2 re-baseline added", fileName: "procurement-plan-2026-v1.1.pdf", size: 498_220, content: VERSION_CONTENT("Annual procurement plan updated with Q2 re-baseline and vendor feedback.") },
+      {
+        id: "v1",
+        version: "v1.0",
+        at: ago(18),
+        actor: "Aloun Sisavath",
+        summary: "Initial upload",
+        fileName: "procurement-plan-2026.pdf",
+        size: 482_113,
+        content: VERSION_CONTENT(
+          "Annual procurement plan with quarterly milestones and budget envelopes."
+        ),
+      },
+      {
+        id: "v2",
+        version: "v1.1",
+        at: ago(6),
+        actor: "Aloun Sisavath",
+        summary: "Q2 re-baseline added",
+        fileName: "procurement-plan-2026-v1.1.pdf",
+        size: 498_220,
+        content: VERSION_CONTENT(
+          "Annual procurement plan updated with Q2 re-baseline and vendor feedback."
+        ),
+      },
     ],
   },
   {
@@ -42,9 +64,42 @@ export const MOCK_DOCUMENTS: DmsDocument[] = [
     tags: ["spec", "road"],
     sharedWith: ["aloun@acme.gov"],
     versions: [
-      { id: "v1", version: "v1.0", at: ago(40), actor: "Kham Anoulack", summary: "Draft circulated", fileName: "road-spec.pdf", size: 1_124_500, content: VERSION_CONTENT("Technical specification covering materials, tolerances, and acceptance tests.") },
-      { id: "v2", version: "v1.1", at: ago(32), actor: "Kham Anoulack", summary: "Feedback incorporated", fileName: "road-spec-v1.1.pdf", size: 1_141_000, content: VERSION_CONTENT("Technical specification revised to incorporate engineering feedback.") },
-      { id: "v3", version: "v1.2", at: ago(2), actor: "Viengkham Saysana", summary: "Annex added", fileName: "road-spec-v1.2.pdf", size: 1_178_300, content: VERSION_CONTENT("Technical specification with annex for traffic control measures.") },
+      {
+        id: "v1",
+        version: "v1.0",
+        at: ago(40),
+        actor: "Kham Anoulack",
+        summary: "Draft circulated",
+        fileName: "road-spec.pdf",
+        size: 1_124_500,
+        content: VERSION_CONTENT(
+          "Technical specification covering materials, tolerances, and acceptance tests."
+        ),
+      },
+      {
+        id: "v2",
+        version: "v1.1",
+        at: ago(32),
+        actor: "Kham Anoulack",
+        summary: "Feedback incorporated",
+        fileName: "road-spec-v1.1.pdf",
+        size: 1_141_000,
+        content: VERSION_CONTENT(
+          "Technical specification revised to incorporate engineering feedback."
+        ),
+      },
+      {
+        id: "v3",
+        version: "v1.2",
+        at: ago(2),
+        actor: "Viengkham Saysana",
+        summary: "Annex added",
+        fileName: "road-spec-v1.2.pdf",
+        size: 1_178_300,
+        content: VERSION_CONTENT(
+          "Technical specification with annex for traffic control measures."
+        ),
+      },
     ],
   },
   {
@@ -62,7 +117,18 @@ export const MOCK_DOCUMENTS: DmsDocument[] = [
     tags: ["contract", "framework"],
     sharedWith: ["somsack@acme.gov"],
     versions: [
-      { id: "v1", version: "v2.0", at: ago(90), actor: "Malina Phetxomphou", summary: "Final signed version", fileName: "framework-contract-office.pdf", size: 902_400, content: VERSION_CONTENT("Signed framework agreement for office supplies with clause 12 on renewals.") },
+      {
+        id: "v1",
+        version: "v2.0",
+        at: ago(90),
+        actor: "Malina Phetxomphou",
+        summary: "Final signed version",
+        fileName: "framework-contract-office.pdf",
+        size: 902_400,
+        content: VERSION_CONTENT(
+          "Signed framework agreement for office supplies with clause 12 on renewals."
+        ),
+      },
     ],
   },
   {
@@ -80,7 +146,18 @@ export const MOCK_DOCUMENTS: DmsDocument[] = [
     tags: ["minutes", "board"],
     sharedWith: [],
     versions: [
-      { id: "v1", version: "v1.0", at: ago(1000), actor: "Phonesavanh Chanthavong", summary: "Minutes recorded", fileName: "board-minutes-jan.pdf", size: 310_050, content: VERSION_CONTENT("Minutes of the January board meeting. Archived after approval.") },
+      {
+        id: "v1",
+        version: "v1.0",
+        at: ago(1000),
+        actor: "Phonesavanh Chanthavong",
+        summary: "Minutes recorded",
+        fileName: "board-minutes-jan.pdf",
+        size: 310_050,
+        content: VERSION_CONTENT(
+          "Minutes of the January board meeting. Archived after approval."
+        ),
+      },
     ],
   },
   {
@@ -98,7 +175,18 @@ export const MOCK_DOCUMENTS: DmsDocument[] = [
     tags: ["inventory", "report"],
     sharedWith: ["malina@acme.gov"],
     versions: [
-      { id: "v1", version: "v1.0", at: ago(60), actor: "Somchai Keopaseuth", summary: "Count sheet uploaded", fileName: "q1-count-sheet.xlsx", size: 88_120, content: VERSION_CONTENT("Quarterly inventory count sheet with variance analysis.") },
+      {
+        id: "v1",
+        version: "v1.0",
+        at: ago(60),
+        actor: "Somchai Keopaseuth",
+        summary: "Count sheet uploaded",
+        fileName: "q1-count-sheet.xlsx",
+        size: 88_120,
+        content: VERSION_CONTENT(
+          "Quarterly inventory count sheet with variance analysis."
+        ),
+      },
     ],
   },
   {
@@ -116,7 +204,18 @@ export const MOCK_DOCUMENTS: DmsDocument[] = [
     tags: ["rfq", "evaluation"],
     sharedWith: ["kham@acme.gov"],
     versions: [
-      { id: "v1", version: "v1.0", at: ago(240), actor: "Aloun Sisavath", summary: "Evaluation completed", fileName: "rfq-evaluation.pdf", size: 655_900, content: VERSION_CONTENT("Technical evaluation of bids for RFQ-2026-011 with scoring matrix.") },
+      {
+        id: "v1",
+        version: "v1.0",
+        at: ago(240),
+        actor: "Aloun Sisavath",
+        summary: "Evaluation completed",
+        fileName: "rfq-evaluation.pdf",
+        size: 655_900,
+        content: VERSION_CONTENT(
+          "Technical evaluation of bids for RFQ-2026-011 with scoring matrix."
+        ),
+      },
     ],
   },
   {
@@ -134,7 +233,18 @@ export const MOCK_DOCUMENTS: DmsDocument[] = [
     tags: ["manual"],
     sharedWith: [],
     versions: [
-      { id: "v1", version: "v1.0", at: ago(5000), actor: "Sengphet Vongdara", summary: "Original manual", fileName: "inventory-procedures.pdf", size: 420_000, content: VERSION_CONTENT("Superseded inventory procedures. Marked for deletion.") },
+      {
+        id: "v1",
+        version: "v1.0",
+        at: ago(5000),
+        actor: "Sengphet Vongdara",
+        summary: "Original manual",
+        fileName: "inventory-procedures.pdf",
+        size: 420_000,
+        content: VERSION_CONTENT(
+          "Superseded inventory procedures. Marked for deletion."
+        ),
+      },
     ],
   },
   {
@@ -152,7 +262,18 @@ export const MOCK_DOCUMENTS: DmsDocument[] = [
     tags: ["budget", "memo"],
     sharedWith: [],
     versions: [
-      { id: "v1", version: "v1.0", at: ago(300), actor: "Anousone Vongsa", summary: "Draft memo", fileName: "budget-concept-note.docx", size: 54_200, content: VERSION_CONTENT("Concept note outlining FY2027 budget priorities.") },
+      {
+        id: "v1",
+        version: "v1.0",
+        at: ago(300),
+        actor: "Anousone Vongsa",
+        summary: "Draft memo",
+        fileName: "budget-concept-note.docx",
+        size: 54_200,
+        content: VERSION_CONTENT(
+          "Concept note outlining FY2027 budget priorities."
+        ),
+      },
     ],
   },
 ];

@@ -184,6 +184,12 @@ sharing, archive/restore, and trash — all mock-first. See `.agent/document.md`
 tags) and manages the vocabularies that back them — all mock-first. See
 `.agent/metadata.md`.
 
+## Versioning
+
+`/dms/versioning` is the version management hub: a version-history registry with
+KPIs, per-document filtering, and actions to create, view, compare (side-by-side
+line diff), and restore versions — all mock-first. See `.agent/versioning.md`.
+
 ## Layout & Navigation
 
 `src/config/navigation.ts` drives the sidebar, breadcrumbs, and the ⌘K command

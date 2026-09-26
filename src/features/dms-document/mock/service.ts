@@ -28,7 +28,10 @@ const CURRENT_ACTOR = "Malina Phetxomphou";
 export const documentService = {
   async listDocuments(): Promise<DmsDocument[]> {
     await delay();
-    return documents.map((entry) => ({ ...entry, versions: [...entry.versions] }));
+    return documents.map((entry) => ({
+      ...entry,
+      versions: [...entry.versions],
+    }));
   },
 
   async getDocument(id: string): Promise<DmsDocument> {
@@ -98,7 +101,9 @@ export const documentService = {
       version: bumpVersion(latest.version),
       at: new Date().toISOString(),
       actor: CURRENT_ACTOR,
-      summary: contentChanged ? "Metadata and content updated" : "Metadata updated",
+      summary: contentChanged
+        ? "Metadata and content updated"
+        : "Metadata updated",
       fileName: latest.fileName,
       size: latest.size,
       content: input.description?.trim() || latest.content,
@@ -109,9 +114,13 @@ export const documentService = {
       category: input.category ?? existing.category,
       classification: input.classification ?? existing.classification,
       updatedAt: new Date().toISOString(),
-      versions: contentChanged ? [version, ...existing.versions] : existing.versions,
+      versions: contentChanged
+        ? [version, ...existing.versions]
+        : existing.versions,
     };
-    documents = documents.map((entry, entryIndex) => (entryIndex === index ? next : entry));
+    documents = documents.map((entry, entryIndex) =>
+      entryIndex === index ? next : entry
+    );
     return { ...next };
   },
 
@@ -141,7 +150,64 @@ export const documentService = {
       updatedAt: new Date().toISOString(),
       versions: [version, ...existing.versions],
     };
-    documents = documents.map((entry, entryIndex) => (entryIndex === index ? next : entry));
+    documents = documents.map((entry, entryIndex) =>
+      entryIndex === index ? next : entry
+    );
+    return { ...next };
+  },
+
+  // DMS-VER-002 — View a single version
+  async getVersion(id: string, versionId: string): Promise<DocumentVersion> {
+    await delay(150);
+    const document = documents.find((entry) => entry.id === id);
+    const version = document?.versions.find((entry) => entry.id === versionId);
+    if (!version) throw new Error("Version not found.");
+    return { ...version };
+  },
+
+  // DMS-VER-003 — Compare two versions of the same document
+  async compareVersions(
+    id: string,
+    leftId: string,
+    rightId: string
+  ): Promise<{ left: DocumentVersion; right: DocumentVersion }> {
+    await delay(250);
+    const document = documents.find((entry) => entry.id === id);
+    if (!document) throw new Error("Document not found.");
+    const left = document.versions.find((entry) => entry.id === leftId);
+    const right = document.versions.find((entry) => entry.id === rightId);
+    if (!left || !right) throw new Error("Version not found.");
+    return { left: { ...left }, right: { ...right } };
+  },
+
+  // DMS-VER-004 — Restore a previous version (roll-forward: creates a new
+  // version with the restored content so history stays immutable)
+  async restoreVersion(id: string, versionId: string): Promise<DmsDocument> {
+    await delay(450);
+    const index = documents.findIndex((entry) => entry.id === id);
+    if (index === -1) throw new Error("Document not found.");
+    const existing = documents[index];
+    const target = existing.versions.find((entry) => entry.id === versionId);
+    if (!target) throw new Error("Version not found.");
+    const latest = existing.versions[0];
+    const version: DocumentVersion = {
+      id: randomId("ver"),
+      version: bumpVersion(latest.version),
+      at: new Date().toISOString(),
+      actor: CURRENT_ACTOR,
+      summary: `Restored from ${target.version}`,
+      fileName: target.fileName,
+      size: target.size,
+      content: target.content,
+    };
+    const next: DmsDocument = {
+      ...existing,
+      updatedAt: new Date().toISOString(),
+      versions: [version, ...existing.versions],
+    };
+    documents = documents.map((entry, entryIndex) =>
+      entryIndex === index ? next : entry
+    );
     return { ...next };
   },
 
@@ -149,7 +215,9 @@ export const documentService = {
   async deleteDocument(id: string): Promise<void> {
     await delay();
     documents = documents.map((entry) =>
-      entry.id === id ? { ...entry, trashed: true, updatedAt: new Date().toISOString() } : entry
+      entry.id === id
+        ? { ...entry, trashed: true, updatedAt: new Date().toISOString() }
+        : entry
     );
   },
 
@@ -162,7 +230,9 @@ export const documentService = {
   async archiveDocument(id: string): Promise<void> {
     await delay();
     documents = documents.map((entry) =>
-      entry.id === id ? { ...entry, status: "Archived", updatedAt: new Date().toISOString() } : entry
+      entry.id === id
+        ? { ...entry, status: "Archived", updatedAt: new Date().toISOString() }
+        : entry
     );
   },
 
@@ -171,18 +241,28 @@ export const documentService = {
     await delay();
     documents = documents.map((entry) =>
       entry.id === id
-        ? { ...entry, status: "Active", trashed: false, updatedAt: new Date().toISOString() }
+        ? {
+            ...entry,
+            status: "Active",
+            trashed: false,
+            updatedAt: new Date().toISOString(),
+          }
         : entry
     );
   },
 
   // DMS-DOC-006 — Download (returns latest content as text)
-  async downloadContent(id: string): Promise<{ fileName: string; content: string }> {
+  async downloadContent(
+    id: string
+  ): Promise<{ fileName: string; content: string }> {
     await delay(200);
     const document = documents.find((entry) => entry.id === id);
     if (!document) throw new Error("Document not found.");
     const latest = document.versions[0];
-    return { fileName: `${document.title}-${latest.version}.txt`, content: latest.content };
+    return {
+      fileName: `${document.title}-${latest.version}.txt`,
+      content: latest.content,
+    };
   },
 
   // DMS-DOC-007 — Share
@@ -196,7 +276,9 @@ export const documentService = {
       sharedWith: Array.from(new Set([...existing.sharedWith, ...emails])),
       updatedAt: new Date().toISOString(),
     };
-    documents = documents.map((entry, entryIndex) => (entryIndex === index ? next : entry));
+    documents = documents.map((entry, entryIndex) =>
+      entryIndex === index ? next : entry
+    );
     return { ...next };
   },
 
@@ -210,7 +292,9 @@ export const documentService = {
       sharedWith: existing.sharedWith.filter((entry) => entry !== email),
       updatedAt: new Date().toISOString(),
     };
-    documents = documents.map((entry, entryIndex) => (entryIndex === index ? next : entry));
+    documents = documents.map((entry, entryIndex) =>
+      entryIndex === index ? next : entry
+    );
     return { ...next };
   },
 

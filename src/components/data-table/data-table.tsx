@@ -9,6 +9,7 @@ import {
   useReactTable,
   type ColumnDef,
   type ColumnFiltersState,
+  type RowData,
   type SortingState,
   type VisibilityState,
 } from "@tanstack/react-table";
@@ -41,6 +42,13 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
+
+declare module "@tanstack/react-table" {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars -- generics required to match the augmented interface
+  interface ColumnMeta<TData extends RowData, TValue> {
+    className?: string;
+  }
+}
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -162,7 +170,10 @@ export function DataTable<TData, TValue>({
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => (
-                  <TableHead key={header.id}>
+                  <TableHead
+                    key={header.id}
+                    className={header.column.columnDef.meta?.className}
+                  >
                     {header.isPlaceholder ? null : (
                       <div
                         className={cn(
@@ -203,8 +214,11 @@ export function DataTable<TData, TValue>({
             {isLoading ? (
               Array.from({ length: 5 }).map((_, index) => (
                 <TableRow key={index}>
-                  {columns.map((column, cellIndex) => (
-                    <TableCell key={cellIndex} className="py-2">
+                  {table.getVisibleLeafColumns().map((column) => (
+                    <TableCell
+                      key={column.id}
+                      className={cn("py-2", column.columnDef.meta?.className)}
+                    >
                       <div className="h-4 w-full animate-pulse rounded bg-muted" />
                     </TableCell>
                   ))}
@@ -218,7 +232,10 @@ export function DataTable<TData, TValue>({
                   className={dense ? "h-8" : undefined}
                 >
                   {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id} className="py-2">
+                    <TableCell
+                      key={cell.id}
+                      className={cn("py-2", cell.column.columnDef.meta?.className)}
+                    >
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext()

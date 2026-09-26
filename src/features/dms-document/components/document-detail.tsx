@@ -18,7 +18,13 @@ import {
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { DataTable } from "@/components/data-table/data-table";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { StatusBadge } from "@/components/shared/status-badge";
 import { ConfirmDialog } from "@/components/shared/confirm-dialog";
 import {
@@ -35,7 +41,10 @@ import { DocumentFormDialog } from "./document-form-dialog";
 import { UploadVersionDialog } from "./upload-version-dialog";
 import { ShareDialog } from "./share-dialog";
 
-const CLASS_VARIANTS: Record<string, "default" | "secondary" | "outline" | "destructive"> = {
+const CLASS_VARIANTS: Record<
+  string,
+  "default" | "secondary" | "outline" | "destructive"
+> = {
   Internal: "secondary",
   Confidential: "destructive",
   Public: "outline",
@@ -46,7 +55,9 @@ const versionColumns: ColumnDef<DocumentVersion>[] = [
     accessorKey: "version",
     header: "Version",
     cell: ({ row }) => (
-      <span className="font-mono text-sm font-medium">{row.original.version}</span>
+      <span className="font-mono text-sm font-medium">
+        {row.original.version}
+      </span>
     ),
   },
   {
@@ -66,12 +77,16 @@ const versionColumns: ColumnDef<DocumentVersion>[] = [
   {
     accessorKey: "actor",
     header: "Actor",
-    cell: ({ row }) => <span className="text-muted-foreground">{row.original.actor}</span>,
+    cell: ({ row }) => (
+      <span className="text-muted-foreground">{row.original.actor}</span>
+    ),
   },
   {
     accessorKey: "summary",
     header: "Note",
-    cell: ({ row }) => <span className="line-clamp-1">{row.original.summary}</span>,
+    cell: ({ row }) => (
+      <span className="line-clamp-1">{row.original.summary}</span>
+    ),
   },
   {
     accessorKey: "fileName",
@@ -101,7 +116,9 @@ export function DocumentDetail({ id }: { id: string }) {
       downloadText(result.fileName, result.content);
       toast.success(`Downloaded ${result.fileName}`);
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : "Unable to download.");
+      toast.error(
+        error instanceof Error ? error.message : "Unable to download."
+      );
     }
   }
 
@@ -122,7 +139,10 @@ export function DocumentDetail({ id }: { id: string }) {
           <Button variant="outline" onClick={() => refetch()}>
             Try again
           </Button>
-          <Link href="/dms/documents" className="inline-flex h-8 items-center gap-1.5 rounded-lg border px-2.5 text-sm font-medium hover:bg-muted">
+          <Link
+            href="/dms/documents"
+            className="inline-flex h-8 items-center gap-1.5 rounded-lg border px-2.5 text-sm font-medium hover:bg-muted"
+          >
             <ArrowLeft className="size-4" />
             Back to documents
           </Link>
@@ -150,7 +170,9 @@ export function DocumentDetail({ id }: { id: string }) {
               <h2 className="text-lg font-semibold tracking-tight">
                 {document.title}
               </h2>
-              <StatusBadge status={document.trashed ? "Deleted" : document.status} />
+              <StatusBadge
+                status={document.trashed ? "Deleted" : document.status}
+              />
               {document.trashed ? <Badge variant="outline">Trash</Badge> : null}
             </div>
             <p className="font-mono text-xs text-muted-foreground">
@@ -158,7 +180,9 @@ export function DocumentDetail({ id }: { id: string }) {
             </p>
             <div className="mt-1 flex flex-wrap items-center gap-1.5">
               <Badge variant="outline">{document.category}</Badge>
-              <Badge variant={CLASS_VARIANTS[document.classification] ?? "secondary"}>
+              <Badge
+                variant={CLASS_VARIANTS[document.classification] ?? "secondary"}
+              >
                 {document.classification}
               </Badge>
               <Badge variant="secondary">{document.department}</Badge>
@@ -167,29 +191,53 @@ export function DocumentDetail({ id }: { id: string }) {
           <div className="flex shrink-0 flex-wrap items-center gap-2">
             {!document.trashed ? (
               <>
-                <Button variant="outline" size="sm" onClick={() => setShareOpen(true)}>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setShareOpen(true)}
+                >
                   <Send />
                   Share
                 </Button>
-                <Button variant="outline" size="sm" onClick={() => setEditOpen(true)}>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setEditOpen(true)}
+                >
                   <FilePlus2 />
                   Edit
                 </Button>
-                <Button variant="outline" size="sm" onClick={() => setUploadOpen(true)}>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setUploadOpen(true)}
+                >
                   <Upload />
                   Upload
                 </Button>
-                <Button variant="outline" size="sm" onClick={() => void handleDownload(document)}>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => void handleDownload(document)}
+                >
                   <Download />
                   Download
                 </Button>
                 {document.status === "Active" ? (
-                  <Button variant="secondary" size="sm" onClick={() => void archive.mutateAsync(document.id)}>
+                  <Button
+                    variant="secondary"
+                    size="sm"
+                    onClick={() => void archive.mutateAsync(document.id)}
+                  >
                     <Archive />
                     Archive
                   </Button>
                 ) : (
-                  <Button variant="secondary" size="sm" onClick={() => void restore.mutateAsync(document.id)}>
+                  <Button
+                    variant="secondary"
+                    size="sm"
+                    onClick={() => void restore.mutateAsync(document.id)}
+                  >
                     <RefreshCcw />
                     Restore
                   </Button>
@@ -209,7 +257,11 @@ export function DocumentDetail({ id }: { id: string }) {
               </>
             ) : (
               <>
-                <Button variant="secondary" size="sm" onClick={() => void restore.mutateAsync(document.id)}>
+                <Button
+                  variant="secondary"
+                  size="sm"
+                  onClick={() => void restore.mutateAsync(document.id)}
+                >
                   <RefreshCcw />
                   Restore
                 </Button>
@@ -249,7 +301,8 @@ export function DocumentDetail({ id }: { id: string }) {
             <CardHeader>
               <CardTitle>Sharing</CardTitle>
               <CardDescription>
-                {document.sharedWith.length} person{document.sharedWith.length === 1 ? "" : "s"} have access.
+                {document.sharedWith.length} person
+                {document.sharedWith.length === 1 ? "" : "s"} have access.
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -266,7 +319,12 @@ export function DocumentDetail({ id }: { id: string }) {
                   ))}
                 </ul>
               )}
-              <Button variant="outline" size="sm" className="mt-3" onClick={() => setShareOpen(true)}>
+              <Button
+                variant="outline"
+                size="sm"
+                className="mt-3"
+                onClick={() => setShareOpen(true)}
+              >
                 <Send />
                 Manage sharing
               </Button>
@@ -301,7 +359,9 @@ export function DocumentDetail({ id }: { id: string }) {
                 </div>
                 <div className="flex justify-between py-2">
                   <dt className="text-muted-foreground">Versions</dt>
-                  <dd className="font-medium tabular-nums">{document.versions.length}</dd>
+                  <dd className="font-medium tabular-nums">
+                    {document.versions.length}
+                  </dd>
                 </div>
               </dl>
             </CardContent>
@@ -310,7 +370,15 @@ export function DocumentDetail({ id }: { id: string }) {
       </div>
 
       <section className="grid gap-3">
-        <h3 className="text-sm font-medium">Version history</h3>
+        <div className="flex items-center justify-between">
+          <h3 className="text-sm font-medium">Version history</h3>
+          <Link
+            href="/dms/versioning"
+            className="text-sm text-muted-foreground hover:text-foreground"
+          >
+            Open versioning →
+          </Link>
+        </div>
         <DataTable
           columns={versionColumns}
           data={document.versions}

@@ -7,6 +7,7 @@ import {
   FileText,
   FormInput,
   Gavel,
+  History,
   Home,
   LayoutDashboard,
   Lock,
@@ -63,6 +64,13 @@ const WORKSPACE: NavGroup = {
       icon: Tag,
       description: "Document types, categories, authors, tags, and numbering.",
       keywords: ["meta", "type", "category", "author", "tag", "numbering"],
+    },
+    {
+      title: "Versioning",
+      href: "/dms/versioning",
+      icon: History,
+      description: "Create, view, compare, and restore document versions.",
+      keywords: ["version", "history", "compare", "restore"],
     },
     {
       title: "My Tasks",
