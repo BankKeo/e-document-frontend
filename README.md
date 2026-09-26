@@ -75,6 +75,8 @@ src/
 │   ├── organization/     # organization, depts, positions, employees,
 │   │                     #   hierarchy, approval authority (mock-first)
 │   └── rbac/             # roles, permissions, data access (mock-first)
+│   └── audit/            # login, activity, document/approval/procurement/
+│                         #   inventory/data-change history (mock-first)
 ├── lib/
 │   ├── api/              # axios instance + typed errors
 │   ├── auth/             # token/session helpers
@@ -154,6 +156,12 @@ approval authority — all mock-first. See `.agent/organization.md`.
 `/admin/roles` (sub-tabbed) covers role CRUD, the permissions catalog,
 role-permission assignment, user-role assignment, department access, and
 data-level access — all mock-first. See `.agent/rbac.md`.
+
+## Audit
+
+`/admin/audit` (sub-tabbed, 7 log types) tracks logins, user activity, document,
+approval, procurement, inventory, and data-change history with CSV export — all
+mock-first. See `.agent/audit.md`.
 
 ## Layout & Navigation
 
