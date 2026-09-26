@@ -5,6 +5,7 @@ import { Menu, Search } from "lucide-react";
 import { Breadcrumbs } from "@/components/layout/breadcrumbs";
 import { ThemeToggle } from "@/components/layout/theme-toggle";
 import { UserMenu } from "@/components/layout/user-menu";
+import { BellMenu } from "@/components/layout/bell-menu";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { Sidebar } from "@/components/layout/sidebar";
@@ -56,6 +57,7 @@ export function Topbar() {
             <span className="text-xs">⌘</span>K
           </kbd>
         </Button>
+        <BellMenu />
         <ThemeToggle />
         <UserMenu />
       </div>

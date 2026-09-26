@@ -77,6 +77,7 @@ src/
 │   └── rbac/             # roles, permissions, data access (mock-first)
 │   └── audit/            # login, activity, document/approval/procurement/
 │                         #   inventory/data-change history (mock-first)
+│   └── notification/     # in-app inbox, email prefs, alerts (mock-first)
 ├── lib/
 │   ├── api/              # axios instance + typed errors
 │   ├── auth/             # token/session helpers
@@ -162,6 +163,12 @@ data-level access — all mock-first. See `.agent/rbac.md`.
 `/admin/audit` (sub-tabbed, 7 log types) tracks logins, user activity, document,
 approval, procurement, inventory, and data-change history with CSV export — all
 mock-first. See `.agent/audit.md`.
+
+## Notifications
+
+`/notifications` (sub-tabbed) covers the in-app inbox, approval/rejection/task/
+contract/low-stock feeds, and the email notification center with preferences —
+all mock-first, with a live unread-count bell in the topbar. See `.agent/notification.md`.
 
 ## Layout & Navigation
 

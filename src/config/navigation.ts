@@ -21,6 +21,7 @@ import {
   Warehouse,
   Workflow,
   ArrowLeftRight,
+  Bell,
   type LucideIcon,
 } from "lucide-react";
 
@@ -79,6 +80,13 @@ const WORKSPACE: NavGroup = {
       href: "/dms/meetings",
       icon: CalendarDays,
       description: "Schedule and record meeting minutes.",
+    },
+    {
+      title: "Notifications",
+      href: "/notifications",
+      icon: Bell,
+      description: "In-app updates, approvals, reminders, and alerts.",
+      keywords: ["alert", "notification", "inbox", "bell", "reminder"],
     },
   ],
 };
