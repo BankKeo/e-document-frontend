@@ -7,6 +7,7 @@ import { Bell, CheckCheck } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
@@ -60,19 +61,21 @@ export function BellMenu() {
         ) : null}
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-80">
-        <DropdownMenuLabel className="flex items-center justify-between">
-          <span>Notifications</span>
-          {unreadCount ? (
-            <button
-              type="button"
-              onClick={() => void markAllRead.mutateAsync()}
-              className="flex items-center gap-1 text-xs font-normal text-primary hover:underline"
-            >
-              <CheckCheck className="size-3.5" />
-              Mark all read
-            </button>
-          ) : null}
-        </DropdownMenuLabel>
+        <DropdownMenuGroup>
+          <DropdownMenuLabel className="flex items-center justify-between">
+            <span>Notifications</span>
+            {unreadCount ? (
+              <button
+                type="button"
+                onClick={() => void markAllRead.mutateAsync()}
+                className="flex items-center gap-1 text-xs font-normal text-primary hover:underline"
+              >
+                <CheckCheck className="size-3.5" />
+                Mark all read
+              </button>
+            ) : null}
+          </DropdownMenuLabel>
+        </DropdownMenuGroup>
         <DropdownMenuSeparator />
         {recent.length === 0 ? (
           <div className="px-1.5 py-2 text-sm text-muted-foreground">

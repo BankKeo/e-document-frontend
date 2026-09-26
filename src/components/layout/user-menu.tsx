@@ -37,15 +37,17 @@ export function UserMenu() {
         </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-56">
-        <DropdownMenuLabel className="flex flex-col">
-          <span className="text-sm font-medium text-foreground">
-            {user?.name ?? "Signed out"}
-          </span>
-          <span className="text-xs font-normal text-muted-foreground">
-            {user?.email}
-          </span>
-        </DropdownMenuLabel>
-        <DropdownMenuSeparator />
+        <DropdownMenuGroup>
+          <DropdownMenuLabel className="flex flex-col">
+            <span className="text-sm font-medium text-foreground">
+              {user?.name ?? "Signed out"}
+            </span>
+            <span className="text-xs font-normal text-muted-foreground">
+              {user?.email}
+            </span>
+          </DropdownMenuLabel>
+          <DropdownMenuSeparator />
+        </DropdownMenuGroup>
         <DropdownMenuGroup>
           <DropdownMenuItem render={<Link href="/account/profile" />}>
             <UserRound />

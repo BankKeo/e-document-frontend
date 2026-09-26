@@ -22,6 +22,7 @@ import {
   Workflow,
   ArrowLeftRight,
   Bell,
+  Tag,
   type LucideIcon,
 } from "lucide-react";
 
@@ -55,6 +56,13 @@ const WORKSPACE: NavGroup = {
       icon: FileText,
       description: "Browse, search, and manage electronic documents.",
       keywords: ["file", "contract", "upload", "pdf"],
+    },
+    {
+      title: "Metadata",
+      href: "/dms/metadata",
+      icon: Tag,
+      description: "Document types, categories, authors, tags, and numbering.",
+      keywords: ["meta", "type", "category", "author", "tag", "numbering"],
     },
     {
       title: "My Tasks",

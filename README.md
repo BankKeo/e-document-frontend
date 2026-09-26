@@ -79,6 +79,7 @@ src/
 │                         #   inventory/data-change history (mock-first)
 │   └── notification/     # in-app inbox, email prefs, alerts (mock-first)
 │   └── dms-document/     # document create/version/share/archive (mock-first)
+│   └── dms-metadata/     # document metadata + vocabularies (mock-first)
 ├── lib/
 │   ├── api/              # axios instance + typed errors
 │   ├── auth/             # token/session helpers
@@ -175,6 +176,13 @@ all mock-first, with a live unread-count bell in the topbar. See `.agent/notific
 
 `/dms/documents` covers document creation, versioned upload/edit, view, download,
 sharing, archive/restore, and trash — all mock-first. See `.agent/document.md`.
+
+## Document Metadata
+
+`/dms/metadata` (sub-tabbed) reviews/edits the eight document metadata fields
+(number, type, category, department, author, created date, confidentiality,
+tags) and manages the vocabularies that back them — all mock-first. See
+`.agent/metadata.md`.
 
 ## Layout & Navigation
 
