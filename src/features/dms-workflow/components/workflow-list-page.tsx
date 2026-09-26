@@ -3,10 +3,33 @@
 import * as React from "react";
 import type { ColumnDef } from "@tanstack/react-table";
 import Link from "next/link";
-import { GitBranch, Loader2, Pencil, Plus, Trash2, Upload } from "lucide-react";
+import {
+  GitBranch,
+  Loader2,
+  MoreHorizontal,
+  Pencil,
+  Plus,
+  Rocket,
+  Trash2,
+  Upload,
+} from "lucide-react";
 import { DataTable } from "@/components/data-table/data-table";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { StatusBadge } from "@/components/shared/status-badge";
 import { ConfirmDialog } from "@/components/shared/confirm-dialog";
 import {
@@ -15,7 +38,7 @@ import {
   usePublishWorkflow,
   useWorkflows,
 } from "../api/workflow.queries";
-import type { WorkflowDefinition } from "../types";
+import type { WorkflowDefinition, WorkflowStatus } from "../types";
 import { WorkflowFormDialog } from "./workflow-form-dialog";
 
 function WorkflowRowActions({
@@ -29,59 +52,76 @@ function WorkflowRowActions({
 }) {
   const publish = usePublishWorkflow();
   const deleteWorkflow = useDeleteWorkflow();
+  const published = workflow.status === "Published";
+  const [confirmOpen, setConfirmOpen] = React.useState(false);
 
   return (
-    <div className="flex flex-wrap justify-end gap-1">
-      <Button
-        variant="ghost"
-        size="sm"
-        onClick={() => onVersion(workflow)}
-        title="New version snapshot"
-      >
-        <Upload />
-        Version
-      </Button>
-      <Button
-        variant="ghost"
-        size="sm"
-        onClick={() => onEdit(workflow)}
-        title="Edit"
-      >
-        <Pencil />
-        Edit
-      </Button>
-      <Button
-        variant="outline"
-        size="sm"
-        onClick={() => void publish.mutateAsync(workflow.id)}
-        disabled={publish.isPending}
-        title={workflow.status === "Published" ? "Unpublish" : "Publish"}
-      >
-        {publish.isPending && <Loader2 className="animate-spin" />}
-        {workflow.status === "Published" ? "Unpublish" : "Publish"}
-      </Button>
+    <>
+      <DropdownMenu>
+        <DropdownMenuTrigger
+          render={
+            <Button variant="ghost" size="icon-sm" aria-label="Workflow actions" />
+          }
+        >
+          <MoreHorizontal />
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="end" className="w-48">
+          <DropdownMenuItem onClick={() => onVersion(workflow)}>
+            <Upload />
+            Version
+          </DropdownMenuItem>
+          <DropdownMenuItem onClick={() => onEdit(workflow)}>
+            <Pencil />
+            Edit
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            onClick={() => void publish.mutateAsync(workflow.id)}
+            disabled={publish.isPending}
+          >
+            {publish.isPending ? (
+              <Loader2 className="animate-spin" />
+            ) : (
+              <Rocket />
+            )}
+            {published ? "Unpublish" : "Publish"}
+          </DropdownMenuItem>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem
+            variant="destructive"
+            onClick={() => setConfirmOpen(true)}
+          >
+            <Trash2 />
+            Delete
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
       <ConfirmDialog
+        open={confirmOpen}
+        onOpenChange={setConfirmOpen}
         title="Delete workflow?"
         description={`${workflow.name} will be permanently removed.`}
         confirmLabel="Delete"
         onConfirm={() => deleteWorkflow.mutateAsync(workflow.id)}
-        trigger={
-          <Button variant="ghost" size="sm" className="text-destructive">
-            <Trash2 />
-          </Button>
-        }
       />
-    </div>
+    </>
   );
 }
 
 export function WorkflowListPage() {
   const { data, isPending, isError, refetch } = useWorkflows();
+  const [status, setStatus] = React.useState<WorkflowStatus | "All">("All");
   const [createOpen, setCreateOpen] = React.useState(false);
   const [editing, setEditing] = React.useState<WorkflowDefinition | null>(null);
   const [versioning, setVersioning] = React.useState<WorkflowDefinition | null>(
     null
   );
+
+  const filtered = React.useMemo(() => {
+    const workflows = data ?? [];
+    return status === "All"
+      ? workflows
+      : workflows.filter((workflow) => workflow.status === status);
+  }, [data, status]);
 
   const columns = React.useMemo<ColumnDef<WorkflowDefinition>[]>(() => {
     return [
@@ -179,21 +219,46 @@ export function WorkflowListPage() {
 
   return (
     <div className="grid gap-4">
-      <div className="flex justify-end">
-        <Button size="sm" onClick={() => setCreateOpen(true)}>
-          <Plus />
-          New workflow
-        </Button>
-      </div>
-
       <DataTable
         columns={columns}
-        data={data ?? []}
+        data={filtered}
         isLoading={isPending}
         searchKey="name"
         searchPlaceholder="Search workflows..."
-        emptyTitle="No workflows"
-        emptyDescription="Create your first workflow definition to get started."
+        emptyTitle={status === "All" ? "No workflows" : "No matching workflows"}
+        emptyDescription={
+          status === "All"
+            ? "Create your first workflow definition to get started."
+            : "Try adjusting the status filter, or add a new workflow."
+        }
+        toolbar={
+          <>
+            <Select
+              value={status}
+              onValueChange={(value) =>
+                setStatus(value as WorkflowStatus | "All")
+              }
+            >
+              <SelectTrigger
+                size="sm"
+                className="w-36"
+                aria-label="Filter by status"
+              >
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="All">All statuses</SelectItem>
+                <SelectItem value="Published">Published</SelectItem>
+                <SelectItem value="Draft">Draft</SelectItem>
+                <SelectItem value="Archived">Archived</SelectItem>
+              </SelectContent>
+            </Select>
+            <Button size="sm" onClick={() => setCreateOpen(true)}>
+              <Plus />
+              New workflow
+            </Button>
+          </>
+        }
       />
 
       <WorkflowFormDialog open={createOpen} onOpenChange={setCreateOpen} />

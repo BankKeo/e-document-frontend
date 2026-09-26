@@ -18,14 +18,29 @@ export function ConfirmDialog({
   confirmLabel = "Confirm",
   onConfirm,
   trigger,
+  open: controlledOpen,
+  onOpenChange: onControlledOpenChange,
 }: {
   title: string;
   description?: string;
   confirmLabel?: string;
   onConfirm: () => void | Promise<void>;
-  trigger: React.ReactElement;
+  trigger?: React.ReactElement;
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
 }) {
-  const [open, setOpen] = useState(false);
+  const [internalOpen, setInternalOpen] = useState(false);
+  const uncontrolled = controlledOpen === undefined;
+  const open = uncontrolled ? internalOpen : controlledOpen;
+
+  function setOpen(next: boolean) {
+    if (uncontrolled) {
+      setInternalOpen(next);
+    } else {
+      onControlledOpenChange?.(next);
+    }
+  }
+
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -44,7 +59,7 @@ export function ConfirmDialog({
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger render={trigger} />
+      {uncontrolled && trigger ? <DialogTrigger render={trigger} /> : null}
       <DialogContent>
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>

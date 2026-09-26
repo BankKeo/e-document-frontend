@@ -15,7 +15,6 @@ import {
 import { DataTable } from "@/components/data-table/data-table";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Card, CardContent } from "@/components/ui/card";
 import { KpiCard } from "@/components/dashboard/kpi-card";
 import {
   Select,
@@ -214,38 +213,30 @@ export function VersioningPage() {
 
   return (
     <div className="grid gap-6">
-      <Card>
-        <CardContent className="pt-6">
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            <KpiCard
-              label="Documents versioned"
-              value={documentCount}
-              icon={FileStack}
-              trend={
-                multiVersionDocs > 0
-                  ? `${multiVersionDocs} with multiple versions`
-                  : "Version-first"
-              }
-            />
-            <KpiCard
-              label="Total versions"
-              value={versionCount}
-              icon={Layers}
-            />
-            <KpiCard
-              label="Restored versions"
-              value={restoredCount}
-              icon={RotateCcw}
-            />
-            <KpiCard
-              label="Latest activity"
-              value={latestRow ? latestRow.actor : "—"}
-              icon={History}
-              trend={latestRow ? latestRow.version : undefined}
-            />
-          </div>
-        </CardContent>
-      </Card>
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <KpiCard
+          label="Documents versioned"
+          value={documentCount}
+          icon={FileStack}
+          trend={
+            multiVersionDocs > 0
+              ? `${multiVersionDocs} with multiple versions`
+              : "Version-first"
+          }
+        />
+        <KpiCard label="Total versions" value={versionCount} icon={Layers} />
+        <KpiCard
+          label="Restored versions"
+          value={restoredCount}
+          icon={RotateCcw}
+        />
+        <KpiCard
+          label="Latest activity"
+          value={latestRow ? latestRow.actor : "—"}
+          icon={History}
+          trend={latestRow ? latestRow.version : undefined}
+        />
+      </div>
 
       <div className="flex flex-wrap items-center justify-between gap-3">
         <Select
