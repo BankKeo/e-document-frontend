@@ -190,6 +190,46 @@ tags) and manages the vocabularies that back them — all mock-first. See
 KPIs, per-document filtering, and actions to create, view, compare (side-by-side
 line diff), and restore versions — all mock-first. See `.agent/versioning.md`.
 
+## Workflows
+
+`/dms/workflows` covers the workflow designer and node types (WF-001…016):
+create/edit/delete/publish/version workflow definitions, plus Approval, Review,
+Conditional, Parallel, Notification, and End nodes rendered as a flow. See
+`.agent/workspace-dms.md`.
+
+## E-Forms
+
+`/dms/forms` is a form builder (FORM-001…012) with a field palette, per-field
+configuration, validation, and a live preview that records test submissions. See
+`.agent/workspace-dms.md`.
+
+## Capture & AI
+
+`/dms/capture` runs the OCR + AI extraction pipeline (AI-001…014): upload scans,
+run preprocessing/OCR, classify, review extracted fields with confidence scores
+and inline search, and correct them manually. See `.agent/workspace-dms.md`.
+
+## Meetings & Tasks
+
+`/dms/meetings` covers scheduling, attendees, agenda, minutes, decisions, and
+action items (MEET-001…010). `/dms/tasks` is a task Kanban with assignment,
+priority, due dates, comments, reminders, and overdue escalation
+(TASK-001…010). See `.agent/workspace-dms.md`.
+
+## Procurement
+
+`/procurement` and `/analytics` aggregate procurement KPIs (ANA-001…010). The
+module routes cover plans (PLAN), purchase requisitions (PR), suppliers (SUP),
+tenders/e-bidding (TENDER), contracts (CON), and deliveries (DEL) — each with
+list and detail pages, mock-first. See `.agent/procurement.md`.
+
+## Warehouse & Inventory
+
+`/warehouse` is a stock/inbound/outbound/forecast dashboard. Module routes cover
+warehouse master (WH), item/inventory (ITEM/STOCK), inbound (IN), outbound
+(OUT), transfers (STOCK-003), assets (ASSET), and barcode/hardware (HW) — all
+mock-first. See `.agent/warehouse.md`.
+
 ## Layout & Navigation
 
 `src/config/navigation.ts` drives the sidebar, breadcrumbs, and the ⌘K command

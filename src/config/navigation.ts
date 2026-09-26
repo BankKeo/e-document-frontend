@@ -1,5 +1,6 @@
 import {
   BarChart3,
+  Barcode,
   Boxes,
   Building2,
   CalendarDays,
@@ -16,6 +17,7 @@ import {
   ScrollText,
   Settings,
   ShieldCheck,
+  Sparkles,
   Truck,
   UserRound,
   Users,
@@ -71,6 +73,13 @@ const WORKSPACE: NavGroup = {
       icon: History,
       description: "Create, view, compare, and restore document versions.",
       keywords: ["version", "history", "compare", "restore"],
+    },
+    {
+      title: "Capture & AI",
+      href: "/dms/capture",
+      icon: Sparkles,
+      description: "Scan documents, run OCR and AI extraction.",
+      keywords: ["ocr", "scan", "capture", "ai", "extraction", "classify"],
     },
     {
       title: "My Tasks",
@@ -187,6 +196,14 @@ const WAREHOUSE: NavGroup = {
       title: "Assets",
       href: "/warehouse/assets",
       icon: Building2,
+    },
+    {
+      title: "Barcode & Hardware",
+      href: "/warehouse/hardware",
+      icon: Barcode,
+      description:
+        "Barcode/QR generation, scanners, printers, and label printing.",
+      keywords: ["barcode", "qr", "scanner", "label", "hardware", "printer"],
     },
   ],
 };
