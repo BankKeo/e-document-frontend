@@ -78,6 +78,7 @@ src/
 │   └── audit/            # login, activity, document/approval/procurement/
 │                         #   inventory/data-change history (mock-first)
 │   └── notification/     # in-app inbox, email prefs, alerts (mock-first)
+│   └── dms-document/     # document create/version/share/archive (mock-first)
 ├── lib/
 │   ├── api/              # axios instance + typed errors
 │   ├── auth/             # token/session helpers
@@ -169,6 +170,11 @@ mock-first. See `.agent/audit.md`.
 `/notifications` (sub-tabbed) covers the in-app inbox, approval/rejection/task/
 contract/low-stock feeds, and the email notification center with preferences —
 all mock-first, with a live unread-count bell in the topbar. See `.agent/notification.md`.
+
+## Documents
+
+`/dms/documents` covers document creation, versioned upload/edit, view, download,
+sharing, archive/restore, and trash — all mock-first. See `.agent/document.md`.
 
 ## Layout & Navigation
 
