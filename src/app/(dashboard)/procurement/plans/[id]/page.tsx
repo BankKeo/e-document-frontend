@@ -3,8 +3,12 @@ import { PageHeader } from "@/components/shared/page-header";
 import { PlanDetail } from "@/features/procurement-plan/components/plan-detail";
 
 export const metadata: Metadata = {
-  title: "Procurement plan details — e-Document",
+  title: "Plan details — e-Document",
 };
+
+export function generateStaticParams() {
+  return [];
+}
 
 export default async function PlanDetailRoute({
   params,

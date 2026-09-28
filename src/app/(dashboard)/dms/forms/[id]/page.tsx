@@ -6,7 +6,11 @@ export const metadata: Metadata = {
   title: "Form builder — e-Document",
 };
 
-export default async function FormBuilderRoute({
+export function generateStaticParams() {
+  return [];
+}
+
+export default async function FormDetailRoute({
   params,
 }: {
   params: Promise<{ id: string }>;

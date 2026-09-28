@@ -6,6 +6,10 @@ export const metadata: Metadata = {
   title: "Meeting details — e-Document",
 };
 
+export function generateStaticParams() {
+  return [];
+}
+
 export default async function MeetingDetailRoute({
   params,
 }: {

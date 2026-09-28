@@ -7,7 +7,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}
+  IMAGE_NAME: ghcr.io/bankkeo/e-document-frontend
 
 jobs:
   build:
@@ -35,8 +35,8 @@ jobs:
           context: .
           push: true
           tags: |
-            ghcr.io/${{ github.repository }}:latest
-            ghcr.io/${{ github.repository }}:${{ github.sha }}
+            ghcr.io/ghcr.io/bankkeo/e-document-frontend:latest
+            ghcr.io/ghcr.io/bankkeo/e-document-frontend:${{ github.sha }}
 
   deploy:
     name: Deploy to EC2
@@ -54,7 +54,7 @@ jobs:
           script: |
             cd /opt/my-app
 
-            docker pull ghcr.io/${{ github.repository }}:latest
+            docker pull ghcr.io/ghcr.io/bankkeo/e-document-frontend:latest
 
             docker compose down
 

@@ -6,6 +6,10 @@ export const metadata: Metadata = {
   title: "Task details — e-Document",
 };
 
+export function generateStaticParams() {
+  return [];
+}
+
 export default async function TaskDetailRoute({
   params,
 }: {

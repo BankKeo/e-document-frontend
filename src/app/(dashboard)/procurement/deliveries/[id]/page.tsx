@@ -6,6 +6,10 @@ export const metadata: Metadata = {
   title: "Delivery details — e-Document",
 };
 
+export function generateStaticParams() {
+  return [];
+}
+
 export default async function DeliveryDetailRoute({
   params,
 }: {

@@ -3,10 +3,14 @@ import { PageHeader } from "@/components/shared/page-header";
 import { InventoryItemDetail } from "@/features/warehouse-inventory/components/inventory-item-detail";
 
 export const metadata: Metadata = {
-  title: "Item details — e-Document",
+  title: "Inventory item details — e-Document",
 };
 
-export default async function InventoryItemDetailRoute({
+export function generateStaticParams() {
+  return [];
+}
+
+export default async function InventoryDetailRoute({
   params,
 }: {
   params: Promise<{ id: string }>;
