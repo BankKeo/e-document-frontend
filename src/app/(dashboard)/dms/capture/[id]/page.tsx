@@ -3,8 +3,12 @@ import { PageHeader } from "@/components/shared/page-header";
 import { CaptureDetail } from "@/features/dms-capture/components/capture-detail";
 
 export const metadata: Metadata = {
-  title: "Capture review — e-Document",
+  title: "Capture details — e-Document",
 };
+
+export function generateStaticParams() {
+  return [];
+}
 
 export default async function CaptureDetailRoute({
   params,

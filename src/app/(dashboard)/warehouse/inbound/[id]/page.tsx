@@ -3,8 +3,12 @@ import { PageHeader } from "@/components/shared/page-header";
 import { InboundDetail } from "@/features/warehouse-inbound/components/inbound-detail";
 
 export const metadata: Metadata = {
-  title: "Receiving order — e-Document",
+  title: "Inbound details — e-Document",
 };
+
+export function generateStaticParams() {
+  return [];
+}
 
 export default async function InboundDetailRoute({
   params,
