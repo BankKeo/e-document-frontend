@@ -246,17 +246,6 @@ export const MOCK_ACTIVITY_EVENTS: UserActivityEvent[] = [
     detail: "CSV download",
     ip: "10.24.0.31",
   },
-  {
-    id: "act_09",
-    at: ago(640),
-    actor: "Somsack Inthavong",
-    actorEmail: "somsack@acme.gov",
-    module: "DMS",
-    action: "Downloaded",
-    target: "Document · contract-v2.pdf",
-    detail: "Version 2.1",
-    ip: "172.16.4.12",
-  },
 ];
 
 export const MOCK_DOCUMENT_EVENTS: DocumentHistoryEntry[] = [
