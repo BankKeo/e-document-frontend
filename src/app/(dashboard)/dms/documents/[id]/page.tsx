@@ -1,13 +1,14 @@
 import type { Metadata } from "next";
 import { PageHeader } from "@/components/shared/page-header";
 import { DocumentDetail } from "@/features/dms-document/components/document-detail";
+import { MOCK_DOCUMENTS } from "@/features/dms-document/mock/data";
 
 export const metadata: Metadata = {
   title: "Document details — e-Document",
 };
 
 export function generateStaticParams() {
-  return [];
+  return MOCK_DOCUMENTS.map((doc) => ({ id: doc.id }));
 }
 
 export default async function DocumentDetailRoute({

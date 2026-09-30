@@ -35,8 +35,8 @@ jobs:
           context: .
           push: true
           tags: |
-            ghcr.io/ghcr.io/bankkeo/e-document-frontend:latest
-            ghcr.io/ghcr.io/bankkeo/e-document-frontend:${{ github.sha }}
+            ghcr.io/bankkeo/e-document-frontend:latest
+            ghcr.io/bankkeo/e-document-frontend:${{ github.sha }}
 
   deploy:
     name: Deploy to EC2
@@ -54,7 +54,7 @@ jobs:
           script: |
             cd /opt/my-app
 
-            docker pull ghcr.io/ghcr.io/bankkeo/e-document-frontend:latest
+            docker pull ghcr.io/bankkeo/e-document-frontend:latest
 
             docker compose down
 

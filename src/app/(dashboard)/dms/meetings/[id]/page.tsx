@@ -1,13 +1,14 @@
 import type { Metadata } from "next";
 import { PageHeader } from "@/components/shared/page-header";
 import { MeetingDetail } from "@/features/dms-meeting/components/meeting-detail";
+import { MOCK_MEETINGS } from "@/features/dms-meeting/mock/data";
 
 export const metadata: Metadata = {
   title: "Meeting details — e-Document",
 };
 
 export function generateStaticParams() {
-  return [];
+  return MOCK_MEETINGS.map((meeting) => ({ id: meeting.id }));
 }
 
 export default async function MeetingDetailRoute({

@@ -1,13 +1,14 @@
 import type { Metadata } from "next";
 import { PageHeader } from "@/components/shared/page-header";
 import { CaptureDetail } from "@/features/dms-capture/components/capture-detail";
+import { MOCK_CAPTURE_DOCUMENTS } from "@/features/dms-capture/mock/data";
 
 export const metadata: Metadata = {
   title: "Capture details — e-Document",
 };
 
 export function generateStaticParams() {
-  return [];
+  return MOCK_CAPTURE_DOCUMENTS.map((doc) => ({ id: doc.id }));
 }
 
 export default async function CaptureDetailRoute({

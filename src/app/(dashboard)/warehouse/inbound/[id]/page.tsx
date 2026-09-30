@@ -1,13 +1,14 @@
 import type { Metadata } from "next";
 import { PageHeader } from "@/components/shared/page-header";
 import { InboundDetail } from "@/features/warehouse-inbound/components/inbound-detail";
+import { MOCK_INBOUND_ORDERS } from "@/features/warehouse-inbound/mock/data";
 
 export const metadata: Metadata = {
   title: "Inbound details — e-Document",
 };
 
 export function generateStaticParams() {
-  return [];
+  return MOCK_INBOUND_ORDERS.map((order) => ({ id: order.id }));
 }
 
 export default async function InboundDetailRoute({

@@ -1,13 +1,14 @@
 import type { Metadata } from "next";
 import { PageHeader } from "@/components/shared/page-header";
 import { FormBuilder } from "@/features/dms-form/components/form-builder";
+import { MOCK_FORMS } from "@/features/dms-form/mock/data";
 
 export const metadata: Metadata = {
   title: "Form builder — e-Document",
 };
 
 export function generateStaticParams() {
-  return [];
+  return MOCK_FORMS.map((form) => ({ id: form.id }));
 }
 
 export default async function FormDetailRoute({

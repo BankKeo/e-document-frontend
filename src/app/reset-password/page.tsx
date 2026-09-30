@@ -1,25 +1,40 @@
-import type { Metadata } from "next";
+"use client";
+
+import { Suspense } from "react";
+import { useSearchParams } from "next/navigation";
+import { Loader2 } from "lucide-react";
 import { AuthPageShell } from "@/features/auth/components/auth-page-shell";
 import { ResetPasswordForm } from "@/features/auth/components/reset-password-form";
 
-export const metadata: Metadata = {
-  title: "Reset password — e-Document",
-  description: "Choose a new password.",
-};
-
-export default async function ResetPasswordPage({
-  searchParams,
-}: {
-  searchParams: Promise<{ token?: string }>;
-}) {
-  const { token } = await searchParams;
+function ResetPasswordContent() {
+  const searchParams = useSearchParams();
+  const token = searchParams.get("token") ?? "";
 
   return (
     <AuthPageShell
       title="Reset password"
       subtitle="Choose a new password for your account."
     >
-      <ResetPasswordForm token={token ?? ""} />
+      <ResetPasswordForm token={token} />
     </AuthPageShell>
+  );
+}
+
+export default function ResetPasswordPage() {
+  return (
+    <Suspense
+      fallback={
+        <AuthPageShell
+          title="Reset password"
+          subtitle="Choose a new password for your account."
+        >
+          <div className="flex items-center justify-center py-10 text-muted-foreground">
+            <Loader2 className="size-4 animate-spin" />
+          </div>
+        </AuthPageShell>
+      }
+    >
+      <ResetPasswordContent />
+    </Suspense>
   );
 }

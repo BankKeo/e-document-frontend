@@ -1,13 +1,14 @@
 import type { Metadata } from "next";
 import { PageHeader } from "@/components/shared/page-header";
 import { ContractDetail } from "@/features/procurement-contract/components/contract-detail";
+import { MOCK_CONTRACTS } from "@/features/procurement-contract/mock/data";
 
 export const metadata: Metadata = {
   title: "Contract details — e-Document",
 };
 
 export function generateStaticParams() {
-  return [];
+  return MOCK_CONTRACTS.map((contract) => ({ id: contract.id }));
 }
 
 export default async function ContractDetailRoute({
