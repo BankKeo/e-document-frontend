@@ -321,18 +321,18 @@ export const MOCK_DOCUMENT_EVENTS: DocumentHistoryEntry[] = [
     summary: "Added annex correction",
     ip: "10.24.0.92",
   },
-  {
-    id: "doc_07",
-    at: ago(900),
-    actor: "System",
-    actorEmail: "sys@acme.gov",
-    document: "obsolete-report.pdf",
-    documentRef: "DOC-2026-0041",
-    action: "Deleted",
-    version: "v1.0",
-    summary: "Purged per retention policy",
-    ip: NETWORK,
-  },
+  // {
+  //   id: "doc_07",
+  //   at: ago(900),
+  //   actor: "System",
+  //   actorEmail: "sys@acme.gov",
+  //   document: "obsolete-report.pdf",
+  //   documentRef: "DOC-2026-0041",
+  //   action: "Deleted",
+  //   version: "v1.0",
+  //   summary: "Purged per retention policy",
+  //   ip: NETWORK,
+  // },
 ];
 
 export const MOCK_APPROVAL_EVENTS: ApprovalEvent[] = [
