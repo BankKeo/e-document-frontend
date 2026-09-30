@@ -60,13 +60,29 @@ jobs:
             echo "::error::EC2_SSH_KEY is missing or empty"
             exit 1
           fi
-          echo "EC2_SSH_KEY first line: [$(echo "$EC2_SSH_KEY" | head -1)]"
-          echo "EC2_SSH_KEY last line: [$(echo "$EC2_SSH_KEY" | tail -1)]"
-          if echo "$EC2_SSH_KEY" | grep -q "BEGIN"; then
-            echo "EC2_SSH_KEY looks like a PEM key (has BEGIN line)"
-          else
-            echo "::error::EC2_SSH_KEY does not contain a BEGIN line - paste may be corrupted"
+          printf '%s' "$EC2_SSH_KEY" > /tmp/ec2_key.pem
+          echo "EC2_SSH_KEY first line: [$(head -1 /tmp/ec2_key.pem)]"
+          echo "EC2_SSH_KEY last line: [$(tail -1 /tmp/ec2_key.pem)]"
+          if grep -q $'\r' /tmp/ec2_key.pem; then
+            echo "::error::EC2_SSH_KEY contains CRLF line endings - secret is corrupted"
             exit 1
+          fi
+          if ! grep -q "BEGIN" /tmp/ec2_key.pem; then
+            echo "::error::EC2_SSH_KEY does not contain a BEGIN line"
+            exit 1
+          fi
+          if ! grep -q "END" /tmp/ec2_key.pem; then
+            echo "::error::EC2_SSH_KEY does not contain an END line - secret is truncated"
+            exit 1
+          fi
+          if command -v ssh-keygen >/dev/null 2>&1; then
+            if ssh-keygen -y -f /tmp/ec2_key.pem >/dev/null 2>&1; then
+              echo "EC2_SSH_KEY parses OK with ssh-keygen"
+            else
+              echo "::error::EC2_SSH_KEY failed ssh-keygen parse"
+              ssh-keygen -y -f /tmp/ec2_key.pem 2>&1 || true
+              exit 1
+            fi
           fi
 
       - name: Deploy
