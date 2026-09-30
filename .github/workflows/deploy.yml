@@ -44,6 +44,31 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Check secrets exist
+        env:
+          EC2_HOST: ${{ secrets.EC2_HOST }}
+          EC2_SSH_KEY: ${{ secrets.EC2_SSH_KEY }}
+        run: |
+          echo "EC2_HOST length: ${#EC2_HOST}"
+          echo "EC2_HOST value: [${EC2_HOST}]"
+          echo "EC2_SSH_KEY length: ${#EC2_SSH_KEY}"
+          if [ -z "$EC2_HOST" ]; then
+            echo "::error::EC2_HOST is missing or empty"
+            exit 1
+          fi
+          if [ -z "$EC2_SSH_KEY" ]; then
+            echo "::error::EC2_SSH_KEY is missing or empty"
+            exit 1
+          fi
+          echo "EC2_SSH_KEY first line: [$(echo "$EC2_SSH_KEY" | head -1)]"
+          echo "EC2_SSH_KEY last line: [$(echo "$EC2_SSH_KEY" | tail -1)]"
+          if echo "$EC2_SSH_KEY" | grep -q "BEGIN"; then
+            echo "EC2_SSH_KEY looks like a PEM key (has BEGIN line)"
+          else
+            echo "::error::EC2_SSH_KEY does not contain a BEGIN line - paste may be corrupted"
+            exit 1
+          fi
+
       - name: Deploy
         uses: appleboy/ssh-action@v1
         with:
